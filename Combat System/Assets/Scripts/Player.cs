@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private float mouseSensitivity = 60f;
     private Rigidbody rb;
     private Animator animator;
-    private bool IsGrounded;
+    public bool IsGrounded = false;
     RaycastHit Hit;
 
     void Start()
@@ -22,11 +22,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out Hit, 1.2f))
+        if (Physics.Raycast(transform.position, Vector3.down, out Hit, 0.001f))
         {
             if ((Hit.collider.CompareTag("Ground")))
             {
                 IsGrounded = true;
+            }
+            else
+            {
+                IsGrounded = false;
             }
         }
         Vector3 moveDirection = Vector3.zero;
@@ -78,10 +82,38 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = 5f;
             animator.SetBool("Run", false);
         }
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded) 
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            animator.SetBool("Jump", true);
-            rb.velocity = new Vector3(0, +JumpForce, 0);
+            if (IsGrounded)
+            {
+                IsGrounded = false;
+                animator.SetBool("Jump", true);
+                rb.velocity = new Vector3(0, +JumpForce, 0);
+            }
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            animator.SetBool("LeftWalk", true);
+            if (!Input.GetKey(KeyCode.LeftShift))
+            {
+                moveSpeed = 3f;
+            }
+        }
+        else
+        {
+            animator.SetBool("LeftWalk", false);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            animator.SetBool("RightWalk", true);
+            if (!Input.GetKey(KeyCode.LeftShift))
+            {
+                moveSpeed = 3f;
+            }
+        }
+        else
+        {
+            animator.SetBool("RightWalk", false);
         }
     }
     public void EndJump()
