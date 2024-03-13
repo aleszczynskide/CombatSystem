@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 1.5f;
+    public float moveSpeed = 5f;
     public float rotationSpeed = 100f;
     private Rigidbody rb;
     private Animator animator;
@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(moveSpeed);
         Vector3 moveDirection = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
@@ -55,6 +56,17 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             animator.SetBool("Block", false);
+        }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            moveSpeed = 9f;
+            animator.SetBool("Run", true);
+            animator.SetBool("Block", false);
+        }
+        else
+        {
+            moveSpeed = 5f;
+            animator.SetBool("Run", false);
         }
     }
 }
