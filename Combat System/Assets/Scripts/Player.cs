@@ -1,13 +1,18 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Burst.CompilerServices;
+using JetBrains.Annotations;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private int JumpForce = 8;
     private float moveSpeed = 5f;
     public float rotationSpeed = 100f;
     private float mouseSensitivity = 60f;
     private Rigidbody rb;
     private Animator animator;
+    private bool IsGrounded;
+    RaycastHit Hit;
 
     void Start()
     {
@@ -17,6 +22,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (Physics.Raycast(transform.position, Vector3.down, out Hit, 1.2f))
+        {
+            if ((Hit.collider.CompareTag("Ground")))
+            {
+                IsGrounded = true;
+            }
+        }
         Vector3 moveDirection = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
@@ -66,5 +78,14 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = 5f;
             animator.SetBool("Run", false);
         }
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded) 
+        {
+            animator.SetBool("Jump", true);
+            rb.velocity = new Vector3(0, +JumpForce, 0);
+        }
+    }
+    public void EndJump()
+    {
+        animator.SetBool("Jump", false);
     }
 }
