@@ -60,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
                 moveSpeed = 10f;
             }
             animator.SetBool("Run", true);
-            animator.SetBool("Block", false);
         }
         else
         {
