@@ -2,38 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float rotationSpeed = 100f;
     private Rigidbody rb;
     private Animator animator;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
+
     void Update()
     {
-        Vector3 MoveDirection = new Vector3(0, 0, 0);
+        Vector3 moveDirection = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            moveDirection += transform.forward;
             animator.SetBool("Run", true);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+            moveDirection += -transform.forward;
             animator.SetBool("Run", true);
         }
-        else if (Input.GetKey(KeyCode.A))
+
+        if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
-            animator.SetBool("Run", true);
+            transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        }
+
+        rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
+
+        if (Input.GetMouseButton(1))
+        {
+            animator.SetBool("Block", true);
+        }
+        else
+        {
+            animator.SetBool("Block", false);
+        }
+
+        if (moveDirection != Vector3.zero)
+        {
             animator.SetBool("Run", true);
         }
         else
@@ -41,8 +59,6 @@ public class Player : MonoBehaviour
             animator.SetBool("Run", false);
         }
     }
-    public void Move()
-    {
-
-    }
 }
+
+
