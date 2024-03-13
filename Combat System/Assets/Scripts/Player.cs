@@ -1,10 +1,10 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float moveSpeed = 1.5f;
     public float rotationSpeed = 100f;
     private Rigidbody rb;
     private Animator animator;
@@ -21,13 +21,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            moveDirection += transform.forward;
-            animator.SetBool("Run", true);
+            moveDirection += transform.forward * moveSpeed;
+            animator.SetBool("Walk", true);
+            animator.SetBool("WalkBackward", false);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            moveDirection += -transform.forward;
-            animator.SetBool("Run", true);
+            moveDirection += -transform.forward * (moveSpeed / 2);
+            animator.SetBool("Walk", false);
+            animator.SetBool("WalkBackward", true);
+        }
+        else
+        {
+            animator.SetBool("Walk", false);
+            animator.SetBool("WalkBackward", false);
         }
 
         if (Input.GetKey(KeyCode.A))
@@ -49,16 +56,5 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("Block", false);
         }
-
-        if (moveDirection != Vector3.zero)
-        {
-            animator.SetBool("Run", true);
-        }
-        else
-        {
-            animator.SetBool("Run", false);
-        }
     }
 }
-
-
