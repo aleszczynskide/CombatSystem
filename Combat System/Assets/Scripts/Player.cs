@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private float mouseSensitivity = 60f;
     private Rigidbody rb;
     private Animator animator;
-    public bool IsGrounded = false;
+    private bool IsGrounded = true;
     RaycastHit Hit;
 
     void Start()
@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(moveSpeed);
         if (Physics.Raycast(transform.position, Vector3.down, out Hit, 0.1f))
         {
             if ((Hit.collider.CompareTag("Ground")))
@@ -79,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            moveSpeed = 5f;
+
             animator.SetBool("Run", false);
         }
         if (Input.GetKeyDown(KeyCode.Space))
@@ -94,19 +95,19 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftShift))
         {
             animator.SetBool("LeftWalk", true);
-            if (!Input.GetKey(KeyCode.LeftShift))
+            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetMouseButton(1))
             {
-                moveSpeed = 5f;
+
             }
         }
         else
         {
             animator.SetBool("LeftWalk", false);
         }
-        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftShift) )
         {
             animator.SetBool("RightWalk", true);
-            if (!Input.GetKey(KeyCode.LeftShift))
+            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetMouseButton(1))
             {
                 moveSpeed = 5f;
             }
@@ -117,11 +118,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            animator.SetBool("Punch", true);
-        }
-        if ((Input.GetKey(KeyCode.W)) && (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.D)))
-        {
-            moveSpeed = 3f;
+            if (IsGrounded)
+            {
+                animator.SetBool("Punch", true);
+            }
         }
 
     }
@@ -129,5 +129,17 @@ public class PlayerMovement : MonoBehaviour
     {
         animator.SetBool("Jump", false);
         animator.SetBool("Punch", false);
+    }
+    public void SpeedUp()
+    {
+        moveSpeed = 7f;
+    }
+    public void SpeedDown()
+    {
+        moveSpeed = 3f;
+    }
+    public void NormalizeSpeed()
+    {
+        moveSpeed = 5f;
     }
 }
