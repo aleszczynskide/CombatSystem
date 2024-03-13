@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out Hit, 0.001f))
+        if (Physics.Raycast(transform.position, Vector3.down, out Hit, 0.1f))
         {
             if ((Hit.collider.CompareTag("Ground")))
             {
@@ -91,33 +91,43 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(0, +JumpForce, 0);
             }
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftShift))
         {
             animator.SetBool("LeftWalk", true);
             if (!Input.GetKey(KeyCode.LeftShift))
             {
-                moveSpeed = 3f;
+                moveSpeed = 5f;
             }
         }
         else
         {
             animator.SetBool("LeftWalk", false);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftShift))
         {
             animator.SetBool("RightWalk", true);
             if (!Input.GetKey(KeyCode.LeftShift))
             {
-                moveSpeed = 3f;
+                moveSpeed = 5f;
             }
         }
         else
         {
             animator.SetBool("RightWalk", false);
         }
+        if (Input.GetMouseButton(0))
+        {
+            animator.SetBool("Punch", true);
+        }
+        if ((Input.GetKey(KeyCode.W)) && (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.D)))
+        {
+            moveSpeed = 3f;
+        }
+
     }
-    public void EndJump()
+    public void EndBools()
     {
         animator.SetBool("Jump", false);
+        animator.SetBool("Punch", false);
     }
 }
