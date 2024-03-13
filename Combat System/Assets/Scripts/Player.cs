@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    private float moveSpeed = 5f;
     public float rotationSpeed = 100f;
+    private float mouseSensitivity = 60f;
     private Rigidbody rb;
     private Animator animator;
 
@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(moveSpeed);
         Vector3 moveDirection = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
@@ -28,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            moveDirection += -transform.forward * (moveSpeed / 2);
+            moveDirection += -transform.forward * (moveSpeed);
             animator.SetBool("Walk", false);
             animator.SetBool("WalkBackward", true);
         }
@@ -38,17 +37,14 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("WalkBackward", false);
         }
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-        }
+        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * mouseSensitivity * Time.deltaTime;
+        float newRotationY = transform.eulerAngles.y + mouseX;
+        transform.rotation = Quaternion.Euler(0, newRotationY, 0);
+
+        float horizontalInput = Input.GetAxis("Horizontal");
+        moveDirection += transform.right * horizontalInput * moveSpeed;
 
         rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
-
         if (Input.GetMouseButton(1))
         {
             animator.SetBool("Block", true);
@@ -59,7 +55,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            moveSpeed = 9f;
+            if (!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                moveSpeed = 10f;
+            }
             animator.SetBool("Run", true);
             animator.SetBool("Block", false);
         }
