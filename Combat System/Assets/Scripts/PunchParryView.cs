@@ -18,7 +18,7 @@ public class PunchParryView : MonoBehaviour
     {   
         if (other.gameObject.CompareTag("NormalAttack"))
         {
-            Debug.Log("Dupa");
+            Player.GetComponent<PlayerMovement>().StunAnimation();
         }
     }
 }

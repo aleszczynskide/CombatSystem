@@ -141,6 +141,11 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded)
             {
                 animator.SetBool("Punch", true);
+                if (ActivePunchPoint)
+                {
+                    ActivePunchPoint = false;
+                    Destroy(PunchPointHolder);
+                }
             }
         }
 
@@ -161,5 +166,9 @@ public class PlayerMovement : MonoBehaviour
     public void NormalizeSpeed()
     {
         moveSpeed = 5f;
+    }
+    public void StunAnimation()
+    {
+        animator.SetTrigger("Stun");
     }
 }

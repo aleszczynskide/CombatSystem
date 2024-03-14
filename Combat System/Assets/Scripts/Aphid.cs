@@ -24,14 +24,6 @@ public class Aphid : MonoBehaviour
         {
             AttackCount = 0;
             animator.SetTrigger("Punch");
-            if (!ActivePunchPoint)
-            {
-                ActivePunchPoint = true;
-                GameObject PunchPoint = Instantiate(PunchPointPrefab);
-                PunchPointHolder = PunchPoint;
-                PunchPoint.transform.parent = this.transform;
-                PunchPoint.transform.position = PunchPointPosition.transform.position;
-            }
         }
     }
     public void Count()
@@ -43,5 +35,22 @@ public class Aphid : MonoBehaviour
         Destroy(PunchPointHolder);
         PunchPointHolder = null;
         ActivePunchPoint = false;
+    }
+    public void AttackPointActive()
+    {
+        if (!ActivePunchPoint)
+        {
+            ActivePunchPoint = true;
+            GameObject PunchPoint = Instantiate(PunchPointPrefab);
+            PunchPointHolder = PunchPoint;
+            PunchPoint.transform.parent = this.transform;
+            PunchPoint.transform.position = PunchPointPosition.transform.position;
+            PunchPoint.GetComponent<AttackPanel>().Aphid = this.gameObject;
+        }
+    }
+    public void Stun()
+    {
+        animator.SetTrigger("Stun");
+       DestroyPunchPoint();
     }
 }
