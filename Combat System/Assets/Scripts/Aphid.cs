@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Aphid : MonoBehaviour
@@ -12,6 +13,7 @@ public class Aphid : MonoBehaviour
     public bool ActivePunchPoint = false;
     public GameObject PunchPointHolder;
     public GameObject Player;
+    private bool Follow = true;
 
     void Start()
     {
@@ -21,11 +23,14 @@ public class Aphid : MonoBehaviour
 
     public void Update()
     {
-        Vector3 toTarget = Player.transform.position - transform.position;
-        transform.LookAt(Player.transform.position);
-        transform.Translate(toTarget * 2 * Time.deltaTime, Space.World);
+            if (Follow)
+        {
+            FollowPlayer();
+        }
+
         if (AttackCount == 2)
         {
+            Follow = false;
             AttackCount = 0;
             animator.SetTrigger("Punch");
         }
@@ -54,7 +59,18 @@ public class Aphid : MonoBehaviour
     }
     public void Stun()
     {
+        Follow = false;
         animator.SetTrigger("Stun");
-       DestroyPunchPoint();
+        DestroyPunchPoint();
+
+    }
+    public void FollowPlayer()
+    {
+        Follow = true;
+        Vector3 PlayerVector = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
+        Vector3 AphidVector = new Vector3(this.transform.position.x, 0, this.transform.position.z);
+        Vector3 toTarget = PlayerVector - AphidVector;
+        transform.LookAt(new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z));
+        transform.Translate(toTarget * 0.3f * Time.deltaTime, Space.World);
     }
 }
