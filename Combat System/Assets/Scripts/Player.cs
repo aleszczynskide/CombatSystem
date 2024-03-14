@@ -173,11 +173,11 @@ public class PlayerMovement : MonoBehaviour
     }
     public void SpeedUp()
     {
-        moveSpeed = 7f;
+       // moveSpeed = 7f;
     }
     public void SpeedDown()
     {
-        moveSpeed = 3f;
+        //moveSpeed = 3f;
     }
     public void NormalizeSpeed()
     {
