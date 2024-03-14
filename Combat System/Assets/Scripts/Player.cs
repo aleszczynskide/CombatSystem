@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Unity.Burst.CompilerServices;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private bool IsGrounded = true;
     RaycastHit Hit;
+    [SerializeField] private GameObject PunchPoint;
+    [SerializeField] private GameObject PunchPointPrefab;
+    public bool ActivePunchPoint = false;
+    public GameObject PunchPointHolder;
 
     void Start()
     {
@@ -65,10 +70,24 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             animator.SetBool("Block", true);
+            if (!ActivePunchPoint)
+            {
+                ActivePunchPoint = true;
+                GameObject PunchPoint = Instantiate(PunchPointPrefab);
+                PunchPointHolder = PunchPoint;
+                PunchPoint.transform.parent = this.transform;
+                PunchPoint.GetComponent<PunchParryView>().Player = this.gameObject;
+            }
+           
         }
         else
         {
             animator.SetBool("Block", false);
+            if (ActivePunchPoint)
+            {
+                ActivePunchPoint = false;
+                Destroy(PunchPointHolder);
+            }
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
