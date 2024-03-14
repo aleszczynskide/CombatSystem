@@ -27,10 +27,12 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         collider = GetComponent<CapsuleCollider>();
+        
     }
 
     void Update()
     {
+       
         Debug.Log(moveSpeed);
         if (Physics.Raycast(transform.position, Vector3.down, out Hit, 0.1f))
         {
@@ -145,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded)
             {
                 animator.SetBool("Punch", true);
+                Cursor.visible = false;
                 if (ActivePunchPoint)
                 {
                     ActivePunchPoint = false;
