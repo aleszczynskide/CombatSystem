@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.Burst.CompilerServices;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEngine.Assertions;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject PunchPointPrefab;
     public bool ActivePunchPoint = false;
     public GameObject PunchPointHolder;
+    public GameObject CameraPosition;
 
     void Start()
     {
@@ -147,6 +149,14 @@ public class PlayerMovement : MonoBehaviour
                     Destroy(PunchPointHolder);
                 }
             }
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+    
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+           
         }
 
     }

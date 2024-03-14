@@ -11,6 +11,7 @@ public class Aphid : MonoBehaviour
     [SerializeField] private GameObject PunchPointPosition;
     public bool ActivePunchPoint = false;
     public GameObject PunchPointHolder;
+    public GameObject Player;
 
     void Start()
     {
@@ -20,6 +21,9 @@ public class Aphid : MonoBehaviour
 
     public void Update()
     {
+        Vector3 toTarget = Player.transform.position - transform.position;
+        transform.LookAt(Player.transform.position);
+        transform.Translate(toTarget * 2 * Time.deltaTime, Space.World);
         if (AttackCount == 2)
         {
             AttackCount = 0;
