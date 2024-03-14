@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                moveSpeed = 10f;
+                moveSpeed = 8f;
             }
             animator.SetBool("Run", true);
         }
