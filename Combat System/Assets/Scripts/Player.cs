@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private bool IsGrounded = true;
     RaycastHit Hit;
-    [SerializeField] private GameObject PunchPoint;
+    [SerializeField] private GameObject PunchPointPosition;
     [SerializeField] private GameObject PunchPointPrefab;
     public bool ActivePunchPoint = false;
     public GameObject PunchPointHolder;
@@ -75,7 +75,8 @@ public class PlayerMovement : MonoBehaviour
                 ActivePunchPoint = true;
                 GameObject PunchPoint = Instantiate(PunchPointPrefab);
                 PunchPointHolder = PunchPoint;
-                PunchPoint.transform.parent = this.transform;
+                PunchPoint.transform.parent = PunchPointPosition.transform;
+                PunchPoint.transform.position = PunchPointPosition.transform.position;
                 PunchPoint.GetComponent<PunchParryView>().Player = this.gameObject;
             }
            

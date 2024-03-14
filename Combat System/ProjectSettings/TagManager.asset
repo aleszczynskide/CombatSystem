@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Punch
+  - PunchParry
   layers:
   - Default
   - TransparentFX
