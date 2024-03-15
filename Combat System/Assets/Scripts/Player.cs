@@ -113,9 +113,29 @@ public class PlayerMovement : MonoBehaviour
         {
             if (IsGrounded)
             {
-                IsGrounded = false;
-                animator.SetBool("Jump", true);
-                rb.velocity = new Vector3(0, +JumpForce, 0);
+                if (!Input.GetMouseButton(1))
+                {
+                    IsGrounded = false;
+                    animator.SetBool("Jump", true);
+                    rb.velocity = new Vector3(0, +JumpForce, 0);
+                }
+                else
+                {
+                    animator.SetBool("Jump", true);
+                    if (Input.GetKey(KeyCode.D))
+                    {
+                        rb.velocity = new Vector3(0,0, 7);
+                    }
+                    else if (Input.GetKey(KeyCode.A))
+                    {
+                        rb.velocity = new Vector3(0, 0, -7);
+                    }
+                    else if (Input.GetKey(KeyCode.S))
+                    {
+                        rb.velocity = new Vector3(-7, 0, 0);
+                    }
+
+                }
             }
         }
         if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftShift))
