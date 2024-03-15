@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float rotationSpeed = 100f;
     private float mouseSensitivity = 60f;
     private Rigidbody rb;
-    private Animator animator;
+    [HideInInspector] public Animator animator;
     private bool IsGrounded = true;
     RaycastHit Hit;
     [SerializeField] private GameObject PunchPointPosition;
