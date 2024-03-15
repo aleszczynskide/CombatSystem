@@ -33,7 +33,10 @@ public class AttackPanel : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("W ry³o");
+            if (other.GetComponent<Aphid>().Hit == false)
+            {
+                other.GetComponent<Aphid>().OnHitReaction();
+            }
         }
     }
 }

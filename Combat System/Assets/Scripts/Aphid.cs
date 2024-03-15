@@ -14,6 +14,7 @@ public class Aphid : MonoBehaviour
     public GameObject PunchPointHolder;
     public GameObject Player;
     private bool Follow = true;
+    public bool Hit;
 
     void Start()
     {
@@ -28,9 +29,10 @@ public class Aphid : MonoBehaviour
             FollowPlayer();
         }
 
-        if (AttackCount == 2)
+        if (AttackCount == 30)
         {
             Follow = false;
+            Hit = true;
             AttackCount = 0;
             animator.SetTrigger("Punch");
         }
@@ -44,6 +46,7 @@ public class Aphid : MonoBehaviour
         Destroy(PunchPointHolder);
         PunchPointHolder = null;
         ActivePunchPoint = false;
+        Hit=false;
     }
     public void AttackPointActive()
     {
@@ -72,5 +75,9 @@ public class Aphid : MonoBehaviour
         Vector3 toTarget = PlayerVector - AphidVector;
         transform.LookAt(new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z));
         transform.Translate(toTarget * 0.3f * Time.deltaTime, Space.World);
+    }
+    public void OnHitReaction()
+    {
+        animator.SetTrigger("Hit");
     }
 }
