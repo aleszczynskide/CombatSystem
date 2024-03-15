@@ -175,13 +175,29 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
         {
-    
+            moveSpeed = 3f;
         }
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
         {
-           
+            moveSpeed = 3f;
+        }
+        else
+        {
+            moveSpeed = 5f;
+        }
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
+        {
+            moveSpeed = 3f;
+        }
+        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        {
+            moveSpeed = 3f;
+        }
+        else
+        {
+            moveSpeed = 5f;
         }
         if (Input.GetKey(KeyCode.C))
         {
