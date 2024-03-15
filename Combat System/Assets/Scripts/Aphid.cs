@@ -55,6 +55,7 @@ public class Aphid : MonoBehaviour
             PunchPoint.transform.parent = this.transform;
             PunchPoint.transform.position = PunchPointPosition.transform.position;
             PunchPoint.GetComponent<AttackPanel>().Aphid = this.gameObject;
+            PunchPoint.GetComponent<AttackPanel>().Player = Player;
         }
     }
     public void Stun()
@@ -62,7 +63,6 @@ public class Aphid : MonoBehaviour
         Follow = false;
         animator.SetTrigger("Stun");
         DestroyPunchPoint();
-
     }
     public void FollowPlayer()
     {

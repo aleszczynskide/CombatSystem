@@ -124,15 +124,15 @@ public class PlayerMovement : MonoBehaviour
                     animator.SetBool("Jump", true);
                     if (Input.GetKey(KeyCode.D))
                     {
-                        rb.velocity = new Vector3(0,0, 7);
+                        rb.velocity = transform.TransformDirection(Vector3.right) * 7;
                     }
                     else if (Input.GetKey(KeyCode.A))
                     {
-                        rb.velocity = new Vector3(0, 0, -7);
+                        rb.velocity = transform.TransformDirection(Vector3.left) * 7;
                     }
                     else if (Input.GetKey(KeyCode.S))
                     {
-                        rb.velocity = new Vector3(-7, 0, 0);
+                        rb.velocity = transform.TransformDirection(Vector3.back) * 7;
                     }
 
                 }
@@ -209,5 +209,9 @@ public class PlayerMovement : MonoBehaviour
     public void StunAnimation()
     {
         animator.SetTrigger("Stun");
+    }
+    public void TakenDamage()
+    {
+        Debug.Log("Dosta³");
     }
 }
