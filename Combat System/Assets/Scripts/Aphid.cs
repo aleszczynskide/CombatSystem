@@ -24,7 +24,8 @@ public class Aphid : MonoBehaviour
 
     public void Update()
     {
-            if (Follow)
+        transform.LookAt(new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z));
+        if (Follow)
         {
             FollowPlayer();
         }
@@ -46,7 +47,7 @@ public class Aphid : MonoBehaviour
         Destroy(PunchPointHolder);
         PunchPointHolder = null;
         ActivePunchPoint = false;
-        Hit=false;
+        Hit = false;
     }
     public void AttackPointActive()
     {
@@ -73,7 +74,6 @@ public class Aphid : MonoBehaviour
         Vector3 PlayerVector = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
         Vector3 AphidVector = new Vector3(this.transform.position.x, 0, this.transform.position.z);
         Vector3 toTarget = PlayerVector - AphidVector;
-        transform.LookAt(new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z));
         transform.Translate(toTarget * 0.3f * Time.deltaTime, Space.World);
     }
     public void OnHitReaction()
