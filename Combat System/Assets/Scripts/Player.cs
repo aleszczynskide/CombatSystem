@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     private float mouseSensitivity = 60f;
     private Rigidbody rb;
     private Animator animator;
-    private Collider collider;
     private bool IsGrounded = true;
     RaycastHit Hit;
     [SerializeField] private GameObject PunchPointPosition;
@@ -26,8 +25,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        collider = GetComponent<CapsuleCollider>();
-        
     }
 
     void Update()
@@ -174,30 +171,6 @@ public class PlayerMovement : MonoBehaviour
                     Destroy(PunchPointHolder);
                 }
             }
-        }
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
-        {
-            moveSpeed = 3f;
-        }
-        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
-        {
-            moveSpeed = 3f;
-        }
-        else
-        {
-            moveSpeed = 5f;
-        }
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
-        {
-            moveSpeed = 3f;
-        }
-        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
-        {
-            moveSpeed = 3f;
-        }
-        else
-        {
-            moveSpeed = 5f;
         }
         if (Input.GetKey(KeyCode.C))
         {
