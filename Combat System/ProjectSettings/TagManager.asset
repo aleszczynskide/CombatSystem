@@ -8,6 +8,7 @@ TagManager:
   - Punch
   - PunchParry
   - NormalAttack
+  - Enemy
   layers:
   - Default
   - TransparentFX

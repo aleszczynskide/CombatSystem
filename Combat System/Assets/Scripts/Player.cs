@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded = true;
     RaycastHit Hit;
     [SerializeField] private GameObject PunchPointPosition;
-    [SerializeField] private GameObject PunchPointPrefab;
+    [SerializeField] private GameObject PunchPointPrefab,AttackPointPrefab;
     public bool ActivePunchPoint = false;
     public GameObject PunchPointHolder;
     public GameObject CameraPosition;
@@ -73,16 +73,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             animator.SetBool("Block", true);
-            if (!ActivePunchPoint)
-            {
-                ActivePunchPoint = true;
-                GameObject PunchPoint = Instantiate(PunchPointPrefab);
-                PunchPointHolder = PunchPoint;
-                PunchPoint.transform.parent = PunchPointPosition.transform;
-                PunchPoint.transform.position = PunchPointPosition.transform.position;
-                PunchPoint.GetComponent<PunchParryView>().Player = this.gameObject;
-            }
-           
         }
         else
         {
@@ -159,11 +149,12 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("RightWalk", false);
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (IsGrounded)
+            if (IsGrounded) 
             {
                 animator.SetBool("Punch", true);
+   
                 Cursor.visible = false;
                 if (ActivePunchPoint)
                 {
@@ -202,5 +193,34 @@ public class PlayerMovement : MonoBehaviour
     public void TakenDamage()
     {
         Debug.Log("Dosta³");
+    }
+    public void DestroyAttackPanel()
+    {
+        Destroy(PunchPointHolder);
+    }
+    public void SpawnAttackPanel()
+    {
+        if (PunchPointHolder != null)
+        {
+            Destroy(PunchPointHolder);
+        }
+        GameObject PunchPoint = Instantiate(AttackPointPrefab);
+        PunchPointHolder = PunchPoint;
+        PunchPoint.transform.parent = PunchPointPosition.transform;
+        PunchPoint.transform.position = PunchPointPosition.transform.position;
+        PunchPoint.GetComponent<AttackPanel>().Player = this.gameObject;
+    }
+    public void SpawnBlock()
+    {
+        if (PunchPointHolder != null)
+        {
+            Destroy(PunchPointHolder);
+        }
+        ActivePunchPoint = true;
+        GameObject PunchPoint = Instantiate(PunchPointPrefab);
+        PunchPointHolder = PunchPoint;
+        PunchPoint.transform.parent = PunchPointPosition.transform;
+        PunchPoint.transform.position = PunchPointPosition.transform.position;
+        PunchPoint.GetComponent<PunchParryView>().Player = this.gameObject;
     }
 }

@@ -31,5 +31,9 @@ public class AttackPanel : MonoBehaviour
         {
             Player.GetComponent<PlayerMovement>().TakenDamage();
         }
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("W ry³o");
+        }
     }
 }
