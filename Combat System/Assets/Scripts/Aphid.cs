@@ -25,7 +25,7 @@ public class Aphid : MonoBehaviour
     public void Update()
     {
 
-        transform.LookAt(new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z));
+     
         if (Follow)
         {
             FollowPlayer();
@@ -72,9 +72,11 @@ public class Aphid : MonoBehaviour
     public void FollowPlayer()
     {
         Follow = true;
+
         Vector3 PlayerVector = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
         Vector3 AphidVector = new Vector3(this.transform.position.x, 0, this.transform.position.z);
         Vector3 toTarget = PlayerVector - AphidVector;
+        transform.LookAt(new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z));
         transform.Translate(toTarget * 0.3f * Time.deltaTime, Space.World);
     }
     public void OnHitReaction()
@@ -85,7 +87,6 @@ public class Aphid : MonoBehaviour
     {
         
         int x = Random.Range(0, 1);
-        Debug.Log("X równa siê = " + x);
         if (x == 0)
         {
             animator.ResetTrigger("Punch");

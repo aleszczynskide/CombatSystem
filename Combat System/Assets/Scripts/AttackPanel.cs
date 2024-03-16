@@ -25,7 +25,6 @@ public class AttackPanel : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Punch"))
         {
-            Debug.Log("PIPA");
             Player.GetComponent<PlayerMovement>().animator.SetTrigger("NormalBlock");
         }
         else if (other.gameObject.CompareTag("Player"))
