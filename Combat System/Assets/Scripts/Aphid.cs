@@ -24,6 +24,7 @@ public class Aphid : MonoBehaviour
 
     public void Update()
     {
+
         transform.LookAt(new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z));
         if (Follow)
         {
@@ -79,5 +80,16 @@ public class Aphid : MonoBehaviour
     public void OnHitReaction()
     {
         animator.SetTrigger("Hit");
+    }
+    public void ResetTimer()
+    {
+        
+        int x = Random.Range(0, 1);
+        Debug.Log("X równa siê = " + x);
+        if (x == 0)
+        {
+            animator.ResetTrigger("Punch");
+            AttackCount = 0;
+        }
     }
 }
