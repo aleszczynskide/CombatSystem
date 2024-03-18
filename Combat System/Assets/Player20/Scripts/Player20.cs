@@ -1,16 +1,23 @@
- using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Player20 : MonoBehaviour
 {
-    Animator anim;
-    Rigidbody rb;
+    public Animator anim;
+    public Rigidbody rb;
     private int JumpForce = 8;
     private float moveSpeed = 5f;
     public float rotationSpeed = 100f;
     private float mouseSensitivity = 60f;
+    [SerializeField] private GameObject PunchPointPosition;
+    [SerializeField] private GameObject PunchPointPrefab, AttackPointPrefab;
+    public bool ActivePunchPoint = false;
+    public GameObject PunchPointHolder;
+    private int Stamina = 10;
+    public Image staminaImage;
 
     void Start()
     {
@@ -47,6 +54,58 @@ public class Player20 : MonoBehaviour
 
         anim.SetFloat("VelocityY", verticalInput);
         anim.SetFloat("VelocityX", horizontalInput);
+
+        //Attack and blocking logic
+        if (Input.GetMouseButton(1))
+        {
+            if (Stamina > 0)
+            {
+                anim.SetBool("Block", true);
+            }
+            else
+            {
+                anim.SetBool("Block", false);
+                anim.SetBool("No", true);
+            }
+            
+        }
+        else
+        {
+            anim.SetBool("Block", false);
+            if (ActivePunchPoint)
+            {
+                ActivePunchPoint = false;
+                Destroy(PunchPointHolder);
+            }
+        }
+    }
+    public void SpawnBlock()
+    {
+        if (PunchPointHolder != null)
+        {
+            Destroy(PunchPointHolder);
+        }
+        ActivePunchPoint = true;
+        GameObject PunchPoint = Instantiate(PunchPointPrefab);
+        PunchPointHolder = PunchPoint;
+        PunchPoint.transform.parent = PunchPointPosition.transform;
+        PunchPoint.transform.position = PunchPointPosition.transform.position;
+        PunchPoint.GetComponent<PunchParryView>().Player = this.gameObject;
+    }
+    public void StunAnimation()
+    {
+        anim.SetBool("Stun", true);
+    }
+    public void ResetBools()
+    {
+        anim.SetBool("Stun", false);
+        anim.SetBool("NormalBlock", false);
+        anim.SetBool("No",false);
+    }
+    public void StaminaMinus()
+    {
+        Stamina -= 5;
+        staminaImage.fillAmount = staminaImage.fillAmount - 0.5f;
     }
 }
 

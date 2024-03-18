@@ -25,7 +25,8 @@ public class AttackPanel : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Punch"))
         {
-            Player.GetComponent<PlayerMovement>().animator.SetTrigger("NormalBlock");
+            Player.GetComponent<Player20>().anim.SetTrigger("NormalBlock");
+            Player.GetComponent<Player20>().StaminaMinus();
         }
         else if (other.gameObject.CompareTag("Player"))
         {

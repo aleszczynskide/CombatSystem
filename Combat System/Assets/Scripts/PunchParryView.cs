@@ -10,7 +10,7 @@ public class PunchParryView : MonoBehaviour
     {
         GameObject PunchPoint = Instantiate(PunchPrefab);
         PunchPoint.transform.position = this.transform.position;
-        Player.GetComponent<PlayerMovement>().PunchPointHolder = PunchPoint;
+        Player.GetComponent<Player20>().PunchPointHolder = PunchPoint;
         PunchPoint.transform.parent = Player.transform;
         Destroy(gameObject);
     }
@@ -18,7 +18,7 @@ public class PunchParryView : MonoBehaviour
     {   
         if (other.gameObject.CompareTag("NormalAttack"))
         {
-            Player.GetComponent<PlayerMovement>().StunAnimation();
+            Player.GetComponent<Player20>().StunAnimation();
         }
     }
 }
