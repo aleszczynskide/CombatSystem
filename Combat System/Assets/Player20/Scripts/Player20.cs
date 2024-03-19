@@ -82,16 +82,12 @@ public class Player20 : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            if (PunchCounter)
+            if (PunchCounter == true)
             {
                 anim.SetBool("Punch", true);
                 if (PunchCount < 3)
                 {
                     PunchCount++;
-                }
-                else if (PunchCount == 3)
-                {
-                    PunchCount = 3;
                 }
             }
         }
@@ -119,6 +115,7 @@ public class Player20 : MonoBehaviour
         anim.SetBool("NormalBlock", false);
         anim.SetBool("No",false);
         anim.SetBool("Punch", false);
+        PunchCounter = true;
     }
     public void StaminaMinus()
     {
@@ -150,6 +147,22 @@ public class Player20 : MonoBehaviour
         {
             PunchCounter = true;
         }
+    }
+    public void SpawnAttackPanel()
+    {
+        if (PunchPointHolder != null)
+        {
+            Destroy(PunchPointHolder);
+        }
+        GameObject PunchPoint = Instantiate(AttackPointPrefab);
+        PunchPointHolder = PunchPoint;
+        PunchPoint.transform.parent = PunchPointPosition.transform;
+        PunchPoint.transform.position = PunchPointPosition.transform.position;
+        PunchPoint.GetComponent<AttackPanel>().Player = this.gameObject;
+    }
+    public void DestroyAttackPanel()
+    {
+        Destroy(PunchPointHolder);
     }
 }
 
