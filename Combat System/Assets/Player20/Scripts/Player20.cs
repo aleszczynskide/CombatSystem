@@ -18,7 +18,8 @@ public class Player20 : MonoBehaviour
     public GameObject PunchPointHolder;
     private int Stamina = 10;
     public Image staminaImage;
-    /*[HideInInspector]*/ public int PunchCount;
+    /*[HideInInspector]*/
+    public int PunchCount;
     private bool PunchCounter = true;
 
     void Start()
@@ -69,7 +70,7 @@ public class Player20 : MonoBehaviour
                 anim.SetBool("Block", false);
                 anim.SetBool("No", true);
             }
-            
+
         }
         else
         {
@@ -84,10 +85,17 @@ public class Player20 : MonoBehaviour
         {
             if (PunchCounter == true)
             {
-                anim.SetBool("Punch", true);
-                if (PunchCount < 3)
+                if (Stamina > 0)
                 {
-                    PunchCount++;
+                    anim.SetBool("Punch", true);
+                    if (PunchCount < 3)
+                    {
+                        PunchCount++;
+                    }
+                }
+                else
+                {
+                    anim.SetBool("No", true);
                 }
             }
         }
@@ -113,7 +121,7 @@ public class Player20 : MonoBehaviour
     {
         anim.SetBool("Stun", false);
         anim.SetBool("NormalBlock", false);
-        anim.SetBool("No",false);
+        anim.SetBool("No", false);
         anim.SetBool("Punch", false);
         PunchCounter = true;
     }
@@ -143,10 +151,7 @@ public class Player20 : MonoBehaviour
     }
     public void TurnOnCounting()
     {
-        if (PunchCount == 0)
-        {
-            PunchCounter = true;
-        }
+        PunchCounter = true;
     }
     public void SpawnAttackPanel()
     {
@@ -163,6 +168,16 @@ public class Player20 : MonoBehaviour
     public void DestroyAttackPanel()
     {
         Destroy(PunchPointHolder);
+    }
+    public void UseStamina()
+    {
+        Stamina -= 1;
+        staminaImage.fillAmount -= 0.1f;
+    }
+    public void AddStamina()
+    {
+        Stamina += 1;
+        staminaImage.fillAmount += 0.1f;
     }
 }
 
