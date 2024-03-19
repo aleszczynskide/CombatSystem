@@ -18,6 +18,8 @@ public class Player20 : MonoBehaviour
     public GameObject PunchPointHolder;
     private int Stamina = 10;
     public Image staminaImage;
+    /*[HideInInspector]*/ public int PunchCount;
+    private bool PunchCounter = true;
 
     void Start()
     {
@@ -78,6 +80,21 @@ public class Player20 : MonoBehaviour
                 Destroy(PunchPointHolder);
             }
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (PunchCounter)
+            {
+                anim.SetBool("Punch", true);
+                if (PunchCount < 3)
+                {
+                    PunchCount++;
+                }
+                else if (PunchCount == 3)
+                {
+                    PunchCount = 3;
+                }
+            }
+        }
     }
     public void SpawnBlock()
     {
@@ -101,11 +118,38 @@ public class Player20 : MonoBehaviour
         anim.SetBool("Stun", false);
         anim.SetBool("NormalBlock", false);
         anim.SetBool("No",false);
+        anim.SetBool("Punch", false);
     }
     public void StaminaMinus()
     {
         Stamina -= 5;
         staminaImage.fillAmount = staminaImage.fillAmount - 0.5f;
+    }
+    public void StopCounting()
+    {
+        PunchCounter = false;
+        PunchCount--;
+    }
+    public void CheckNextPunch()
+    {
+        if (PunchCount > 0)
+        {
+            anim.SetBool("Punch", true);
+            PunchCount--;
+        }
+        else
+        {
+            anim.SetBool("Punch", false);
+            PunchCounter = true;
+            PunchCount = 0;
+        }
+    }
+    public void TurnOnCounting()
+    {
+        if (PunchCount == 0)
+        {
+            PunchCounter = true;
+        }
     }
 }
 
