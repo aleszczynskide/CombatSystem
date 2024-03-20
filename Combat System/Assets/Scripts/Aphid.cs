@@ -39,9 +39,15 @@ public class Aphid : MonoBehaviour
             Follow = false;
             Hit = true;
             AttackCount = 0;
-            animator.SetTrigger("Punch");
-            Player.GetComponent<Player20>().src.clip = Player.GetComponent<Player20>().Audio[4];
-            Player.GetComponent<Player20>().src.Play();
+            int x = Random.Range(0, 2);
+            if (x == 0)
+            {
+                animator.SetTrigger("Punch");
+            }
+            else if (x == 1)
+            {
+                animator.SetTrigger("ThreeWayFight");
+            }
         }
     }
     public void Count()
@@ -50,7 +56,7 @@ public class Aphid : MonoBehaviour
         {
             AttackCount++;
         }
-        
+
     }
     public void DestroyPunchPoint()
     {
@@ -98,13 +104,14 @@ public class Aphid : MonoBehaviour
             Counter = false;
             AttackCount = 0;
             animator.ResetTrigger("Punch");
+            animator.ResetTrigger("ThreeWayFight");
             this.gameObject.tag = "Untagged";
             Follow = false;
             rb.isKinematic = false;
             Player.GetComponent<Player20>().src.clip = Player.GetComponent<Player20>().Audio[3];
             Player.GetComponent<Player20>().src.Play();
         }
-       
+
     }
     public void ResetTimer()
     {
@@ -114,5 +121,10 @@ public class Aphid : MonoBehaviour
             animator.ResetTrigger("Punch");
             AttackCount = 0;
         }
+    }
+    public void PlayAttackSound()
+    {
+        Player.GetComponent<Player20>().src.clip = Player.GetComponent<Player20>().Audio[4];
+        Player.GetComponent<Player20>().src.Play();
     }
 }

@@ -9,11 +9,11 @@ public class AttackPanel : MonoBehaviour
     public GameObject Player;
     void Start()
     {
-        
+
     }
     void Update()
     {
-        
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -32,7 +32,11 @@ public class AttackPanel : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Player"))
         {
-            Player.GetComponent<PlayerMovement>().TakenDamage();
+            if (!Player.GetComponent<Player20>().BlockBool)
+            {
+                Player.GetComponent<Player20>().TakenDamage();
+            }
+
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {

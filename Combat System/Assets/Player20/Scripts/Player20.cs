@@ -17,11 +17,13 @@ public class Player20 : MonoBehaviour
     public bool ActivePunchPoint = false;
     public GameObject PunchPointHolder;
     private int Stamina = 10;
-    public Image staminaImage,EnemyHealthImage;
+    public Image staminaImage, EnemyHealthImage, HealthBar;
     public int PunchCount;
     private bool PunchCounter = true;
     public AudioClip[] Audio;
-    [HideInInspector] public  AudioSource src;
+    [HideInInspector] public AudioSource src;
+    [HideInInspector] public bool BlockBool, StunBool;
+    private int Health = 10;
 
     void Start()
     {
@@ -66,17 +68,20 @@ public class Player20 : MonoBehaviour
             if (Stamina > 0)
             {
                 anim.SetBool("Block", true);
+                BlockBool = true;
             }
             else
             {
                 anim.SetBool("Block", false);
                 anim.SetBool("No", true);
+                BlockBool = false;
             }
 
         }
         else
         {
             anim.SetBool("Block", false);
+            BlockBool = false;
             if (ActivePunchPoint)
             {
                 ActivePunchPoint = false;
@@ -85,14 +90,16 @@ public class Player20 : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            if (PunchCounter == true)
+            if (Stamina > 0)
             {
-                if (Stamina > 0)
+                if (PunchCounter == true)
                 {
                     anim.SetBool("Punch", true);
                     if (PunchCount < 3)
                     {
                         PunchCount++;
+                        Stamina -= 1;
+                        staminaImage.fillAmount -= 0.1f;
                     }
                 }
                 else
@@ -120,6 +127,8 @@ public class Player20 : MonoBehaviour
         anim.SetBool("Stun", true);
         src.clip = Audio[0];
         src.Play();
+        StunBool = false;
+        anim.SetTrigger("StunTimer");
     }
     public void ResetBools()
     {
@@ -175,13 +184,27 @@ public class Player20 : MonoBehaviour
     }
     public void UseStamina()
     {
-        Stamina -= 1;
-        staminaImage.fillAmount -= 0.1f;
+        //   Stamina -= 1;
+        // staminaImage.fillAmount -= 0.1f;
     }
     public void AddStamina()
     {
         Stamina += 1;
         staminaImage.fillAmount += 0.1f;
+    }
+    public void TakenDamage()
+    {
+        Health -= 2;
+        HealthBar.fillAmount -= 0.2f;
+        if (Health == 0)
+        {
+            Destroy(gameObject);
+        }
+
+    }
+    public void ResetStun()
+    {
+        StunBool = true;
     }
 }
 
