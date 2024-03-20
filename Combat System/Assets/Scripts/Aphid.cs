@@ -28,7 +28,7 @@ public class Aphid : MonoBehaviour
 
     public void Update()
     {
-     
+        Debug.Log(AttackCount);
         if (Follow)
         {
             FollowPlayer();
@@ -113,8 +113,6 @@ public class Aphid : MonoBehaviour
         {
             animator.ResetTrigger("Punch");
             AttackCount = 0;
-            Player.GetComponent<Player20>().src.clip = Player.GetComponent<Player20>().Audio[4];
-            Player.GetComponent<Player20>().src.Play();
         }
     }
 }
