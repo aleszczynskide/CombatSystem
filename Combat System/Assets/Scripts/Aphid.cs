@@ -17,7 +17,7 @@ public class Aphid : MonoBehaviour
     private bool Follow = true;
     public bool Hit;
     public int AphidLife = 10;
-    public bool Counter;
+    public bool Counter = true;
 
     void Start()
     {
@@ -28,7 +28,6 @@ public class Aphid : MonoBehaviour
 
     public void Update()
     {
-
      
         if (Follow)
         {
@@ -41,6 +40,8 @@ public class Aphid : MonoBehaviour
             Hit = true;
             AttackCount = 0;
             animator.SetTrigger("Punch");
+            Player.GetComponent<Player20>().src.clip = Player.GetComponent<Player20>().Audio[4];
+            Player.GetComponent<Player20>().src.Play();
         }
     }
     public void Count()
@@ -100,17 +101,20 @@ public class Aphid : MonoBehaviour
             this.gameObject.tag = "Untagged";
             Follow = false;
             rb.isKinematic = false;
+            Player.GetComponent<Player20>().src.clip = Player.GetComponent<Player20>().Audio[3];
+            Player.GetComponent<Player20>().src.Play();
         }
        
     }
     public void ResetTimer()
     {
-        
         int x = Random.Range(0, 1);
         if (x == 0)
         {
             animator.ResetTrigger("Punch");
             AttackCount = 0;
+            Player.GetComponent<Player20>().src.clip = Player.GetComponent<Player20>().Audio[4];
+            Player.GetComponent<Player20>().src.Play();
         }
     }
 }

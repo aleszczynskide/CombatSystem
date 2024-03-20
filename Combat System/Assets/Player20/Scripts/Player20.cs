@@ -17,15 +17,17 @@ public class Player20 : MonoBehaviour
     public bool ActivePunchPoint = false;
     public GameObject PunchPointHolder;
     private int Stamina = 10;
-    public Image staminaImage;
-    /*[HideInInspector]*/
+    public Image staminaImage,EnemyHealthImage;
     public int PunchCount;
     private bool PunchCounter = true;
+    public AudioClip[] Audio;
+    [HideInInspector] public  AudioSource src;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        src = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -116,6 +118,8 @@ public class Player20 : MonoBehaviour
     public void StunAnimation()
     {
         anim.SetBool("Stun", true);
+        src.clip = Audio[0];
+        src.Play();
     }
     public void ResetBools()
     {

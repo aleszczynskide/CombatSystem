@@ -26,6 +26,8 @@ public class AttackPanel : MonoBehaviour
         else if (other.gameObject.CompareTag("Punch"))
         {
             Player.GetComponent<Player20>().anim.SetTrigger("NormalBlock");
+            Player.GetComponent<Player20>().src.clip = Player.GetComponent<Player20>().Audio[1];
+            Player.GetComponent<Player20>().src.Play();
             Player.GetComponent<Player20>().StaminaMinus();
         }
         else if (other.gameObject.CompareTag("Player"))
@@ -34,6 +36,9 @@ public class AttackPanel : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {
+            Player.GetComponent<Player20>().src.clip = Player.GetComponent<Player20>().Audio[2];
+            Player.GetComponent<Player20>().src.Play();
+            Player.GetComponent<Player20>().EnemyHealthImage.fillAmount -= 0.2f;
             if (other.GetComponent<Aphid>().Hit == false)
             {
                 other.GetComponent<Aphid>().OnHitReaction();
