@@ -13,7 +13,7 @@ public class Player20 : MonoBehaviour
     public float rotationSpeed = 100f;
     private float mouseSensitivity = 60f;
     [SerializeField] private GameObject PunchPointPosition;
-    [SerializeField] private GameObject PunchPointPrefab, AttackPointPrefab;
+    [SerializeField] private GameObject PunchPointPrefab, AttackPointPrefab,NormalBlockPrefab;
     public bool ActivePunchPoint = false;
     public GameObject PunchPointHolder;
     private int Stamina = 10;
@@ -205,6 +205,19 @@ public class Player20 : MonoBehaviour
     public void ResetStun()
     {
         StunBool = true;
+    }
+    public void SpawnNormalBlock()
+    {
+        if (PunchPointHolder != null)
+        {
+            Destroy(PunchPointHolder);
+        }
+        ActivePunchPoint = true;
+        GameObject PunchPoint = Instantiate(NormalBlockPrefab);
+        PunchPointHolder = PunchPoint;
+        PunchPoint.transform.parent = PunchPointPosition.transform;
+        PunchPoint.transform.position = PunchPointPosition.transform.position;
+        PunchPoint.GetComponent<PunchParryView>().Player = this.gameObject;
     }
 }
 
