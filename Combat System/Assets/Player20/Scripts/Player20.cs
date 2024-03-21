@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player20 : MonoBehaviour
@@ -30,6 +32,7 @@ public class Player20 : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         src = GetComponent<AudioSource>();
+        Cursor.visible = false;
     }
 
     void Update()
@@ -107,6 +110,10 @@ public class Player20 : MonoBehaviour
                     anim.SetBool("No", true);
                 }
             }
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
     public void SpawnBlock()
