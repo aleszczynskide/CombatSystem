@@ -37,6 +37,16 @@ public class Player20 : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            anim.SetBool("Run",true);
+            moveSpeed = 7;
+        }
+        else
+        {
+            anim.SetBool("Run", false);
+            moveSpeed = 5;
+        }
         // Mouse Movement
         Vector3 moveDirection = Vector3.zero;
         float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * mouseSensitivity * Time.deltaTime;
@@ -46,8 +56,11 @@ public class Player20 : MonoBehaviour
         // Movement Input
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-
-        moveDirection += transform.right * horizontalInput * moveSpeed;
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            moveDirection += transform.right * horizontalInput * moveSpeed;
+        }
+       
         moveDirection += transform.forward * verticalInput * moveSpeed;
 
         rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
@@ -226,5 +239,11 @@ public class Player20 : MonoBehaviour
         PunchPoint.transform.position = PunchPointPosition.transform.position;
         PunchPoint.GetComponent<PunchParryView>().Player = this.gameObject;
     }
+    public void PlaySound()
+    {
+        src.clip = Audio[4];
+        src.Play();
+    }
+
 }
 
