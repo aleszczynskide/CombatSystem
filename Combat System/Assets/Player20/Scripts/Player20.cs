@@ -15,7 +15,7 @@ public class Player20 : MonoBehaviour
     public float rotationSpeed = 100f;
     private float mouseSensitivity = 60f;
     [SerializeField] private GameObject PunchPointPosition;
-    [SerializeField] private GameObject PunchPointPrefab, AttackPointPrefab,NormalBlockPrefab;
+    [SerializeField] private GameObject PunchPointPrefab, AttackPointPrefab, NormalBlockPrefab;
     public bool ActivePunchPoint = false;
     public GameObject PunchPointHolder;
     private int Stamina = 10;
@@ -26,6 +26,8 @@ public class Player20 : MonoBehaviour
     [HideInInspector] public AudioSource src;
     [HideInInspector] public bool BlockBool, StunBool;
     private int Health = 10;
+    RaycastHit Hit;
+    public bool IsGrounded = true;
 
     void Start()
     {
@@ -37,15 +39,36 @@ public class Player20 : MonoBehaviour
 
     void Update()
     {
+
+        if (Physics.Raycast(transform.position, Vector3.down, out Hit,5f))
+        {
+            if ((Hit.collider.CompareTag("Ground")))
+            {
+                IsGrounded = true;
+            }
+            else
+            {
+                IsGrounded = false;
+            }
+        }
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            anim.SetBool("Run",true);
+            anim.SetBool("Run", true);
             moveSpeed = 7;
         }
         else
         {
             anim.SetBool("Run", false);
             moveSpeed = 5;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (IsGrounded)
+            {
+                anim.SetTrigger("Jump");
+                rb.velocity = new Vector3(0, +JumpForce, 0);
+            }
+
         }
         // Mouse Movement
         Vector3 moveDirection = Vector3.zero;
@@ -60,7 +83,7 @@ public class Player20 : MonoBehaviour
         {
             moveDirection += transform.right * horizontalInput * moveSpeed;
         }
-       
+
         moveDirection += transform.forward * verticalInput * moveSpeed;
 
         rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
@@ -106,6 +129,7 @@ public class Player20 : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
+            Cursor.visible = false;
             if (Stamina > 0)
             {
                 if (PunchCounter == true)

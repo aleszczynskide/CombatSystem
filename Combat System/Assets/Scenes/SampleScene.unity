@@ -1118,6 +1118,7 @@ MonoBehaviour:
   src: {fileID: 0}
   BlockBool: 0
   StunBool: 0
+  IsGrounded: 0
 --- !u!136 &218357461
 CapsuleCollider:
   m_ObjectHideFlags: 0
